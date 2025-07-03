@@ -2,7 +2,7 @@
 
 import { parseArguments } from './src/arguments-pacer.js';
 import { ParallelRunner } from './src/parallel-runner.js';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, resolve } from 'url';
 import chalk from 'chalk';
 
 // Handle graceful shutdown
@@ -62,12 +62,7 @@ async function main() {
   await global.runner.runParallel(commands);
 }
 
-// Run if this file is executed directly
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  main().catch(error => {
-    console.error(chalk.red('Unexpected error:'), error);
-    process.exit(1);
-  });
-}
-
-export { ParallelRunner };
+main().catch(error => {
+  console.error(chalk.red('Unexpected error:'), error);
+  process.exit(1);
+});
