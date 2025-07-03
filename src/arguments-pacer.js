@@ -50,7 +50,7 @@ Examples:
     const commands = raw
       .split(';')
       .map((cmd, i) => ({
-        name: `cmd${i + 1}`,
+        name: `${cmd.trim().padEnd(10, ' ')}`,
         command: cmd.trim(),
         cwd: process.cwd()
       }))
