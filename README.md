@@ -1,4 +1,4 @@
-# parallel-executor
+# parallel-sh
 
 Run multiple shell commands in parallel with pretty, Docker-like output.
 
@@ -13,21 +13,21 @@ Run multiple shell commands in parallel with pretty, Docker-like output.
 You can run directly with `npx` (no install needed):
 
 ```sh
-npx parallel-executor --commands 'cd frontend && npm run dev; cd backend && npm run dev'
+npx parallel-sh --commands 'cd frontend && npm run dev; cd backend && npm run dev'
 ```
 
 Or install globally:
 
 ```sh
-npm install -g parallel-executor
-parallel-executor --commands 'cd frontend && npm run dev; cd backend && npm run dev'
+npm install -g parallel-sh
+parallel-sh --commands 'cd frontend && npm run dev; cd backend && npm run dev'
 ```
 
 Or locally in your project:
 
 ```sh
-npm install parallel-executor --save-dev
-npx parallel-executor --commands 'cd frontend && npm run dev; cd backend && npm run dev'
+npm install parallel-sh --save-dev
+npx parallel-sh --commands 'cd frontend && npm run dev; cd backend && npm run dev'
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ npx parallel-executor --commands 'cd frontend && npm run dev; cd backend && npm 
 #### Run commands directly
 
 ```sh
-npx parallel-executor --commands 'cd frontend && npm run dev; cd backend && npm run start:dev'
+npx parallel-sh --commands 'cd frontend && npm run dev; cd backend && npm run start:dev'
 ```
 
 #### Using a config file
@@ -70,13 +70,13 @@ Create a file (e.g., `commands.json`):
 Then run:
 
 ```sh
-npx parallel-executor --config commands.json
+npx parallel-sh --config commands.json
 ```
 
 #### Show help
 
 ```sh
-npx parallel-executor --help
+npx parallel-sh --help
 ```
 
 ## License

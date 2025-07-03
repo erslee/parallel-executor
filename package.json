@@ -1,11 +1,11 @@
 {
-  "name": "parallel-executor",
+  "name": "parallel-sh",
   "version": "1.0.0",
   "description": "Run multiple commands in parallel with pretty Docker-like output",
   "main": "runner.js",
   "type": "module",
   "bin": {
-    "parallel-executor": "./runner.js"
+    "parallel-sh": "./runner.js"
   },
   "scripts": {
     "start": "node runner.js",
