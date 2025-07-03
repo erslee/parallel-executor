@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "name": "frontend",
+      "command": "npm run dev",
+      "cwd": "./frontend"
+    },
+    {
+      "name": "backend",
+      "command": "npm run start:dev",
+      "cwd": "./backend"
+    },
+    {
+      "name": "api-tests",
+      "command": "npm run test:watch",
+      "cwd": "./api"
+    },
+    {
+      "name": "build-assets",
+      "command": "npm run build:watch",
+      "cwd": "./assets"
+    },
+    {
+      "name": "storybook",
+      "command": "npm run storybook",
+      "cwd": "./components"
+    }
+  ]
+}
