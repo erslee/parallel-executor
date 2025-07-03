@@ -25,6 +25,8 @@ Examples:
 
   # The config file should look like:
   {
+    "minLength": 10,
+    "maxLength": 20,
     "commands": [
       {
         "name": "frontend",
@@ -42,7 +44,17 @@ Examples:
     process.exit(0);
   }
 
-  // Parse --commands first (priority)
+    // Parse --minLength and --maxLength
+  const minLengthIndex = args.indexOf('--minLength');
+  const maxLengthIndex = args.indexOf('--maxLength');
+  let minLength, maxLength;
+  if (minLengthIndex !== -1 && args[minLengthIndex + 1]) {
+    minLength = parseInt(args[minLengthIndex + 1], 10);
+  }
+  if (maxLengthIndex !== -1 && args[maxLengthIndex + 1]) {
+    maxLength = parseInt(args[maxLengthIndex + 1], 10);
+  }
+
   const commandsIndex = args.indexOf('--commands');
   if (commandsIndex !== -1 && args[commandsIndex + 1]) {
     // Split by ';', trim, and filter out empty commands
@@ -55,14 +67,12 @@ Examples:
         cwd: process.cwd()
       }))
       .filter(cmd => cmd.command);
-    return { commands };
+    return { commands, minLength, maxLength };
   }
 
   // Parse --config
   const configIndex = args.indexOf('--config');
   if (configIndex !== -1 && args[configIndex + 1]) {
-    return { configFile: args[configIndex + 1] };
+    return { configFile: args[configIndex + 1], minLength, maxLength };
   }
-
-  return {};
 }

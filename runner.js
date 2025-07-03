@@ -13,9 +13,11 @@ process.on('SIGINT', () => {
 });
 
 async function main() {
-  const { configFile, commands: cliCommands } = parseArguments();
+  const { configFile, commands: cliCommands, minLength, maxLength } = parseArguments();
 
   let commands = [];
+  let minLen = minLength ?? 4;
+  let maxLen = maxLength ?? 12;
 
   if (cliCommands && cliCommands.length > 0) {
     commands = cliCommands;
@@ -24,12 +26,16 @@ async function main() {
       const fs = require('fs');
       const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
       commands = config.commands || [];
+      minLen = config.minLength ?? minLen;
+      maxLen = config.maxLength ?? maxLen;
     } catch (error) {
       console.error(chalk.red('Error reading config file:'), error.message);
       process.exit(1);
     }
   } else {
     // Default example commands
+    minLen = 10;
+    maxLen = 20;
     commands = [
       {
         name: 'frontend',
@@ -58,7 +64,7 @@ async function main() {
     process.exit(0);
   }
 
-  global.runner = new ParallelRunner();
+  global.runner = new ParallelRunner({ minLength: minLen, maxLength: maxLen });
   await global.runner.runParallel(commands);
 }
 

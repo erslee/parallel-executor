@@ -2,33 +2,41 @@ import { spawn } from "child_process";
 import chalk from "chalk";
 
 export class ParallelRunner {
-  constructor() {
-    this.processes = new Map();
-    this.colors = [
-      "red",
-      "green",
-      "yellow",
-      "blue",
-      "magenta",
-      "cyan",
-      "redBright",
-      "greenBright",
-      "yellowBright",
-      "blueBright",
-    ];
-    this.colorIndex = 0;
+  #maxLength;
+  #minLength;
+  #colors = [
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
+    "redBright",
+    "greenBright",
+    "yellowBright",
+    "blueBright",
+  ];
+  #colorIndex = 0;
+  #processes = new Map();
+
+  constructor(options = {}) {
+    this.#maxLength = options.maxLength ?? 12;
+    this.#minLength = options.minLength ?? 4;
   }
 
   getNextColor() {
-    const color = this.colors[this.colorIndex % this.colors.length];
-    this.colorIndex++;
+    const color = this.#colors[this.#colorIndex % this.#colors.length];
+    this.#colorIndex++;
     return color;
   }
 
-  formatServiceName(name, maxLength = 12) {
-    return name.length > maxLength
+  formatServiceName(name) {
+    const minLength = this.#minLength;
+    const maxLength = this.#maxLength;
+    let formatted = name.length > maxLength
       ? name.substring(0, maxLength - 3) + "..."
-      : name.padEnd(maxLength);
+      : name.padEnd(minLength);
+    return formatted;
   }
 
   logWithPrefix(service, message, color, type = "info") {
@@ -60,7 +68,7 @@ export class ParallelRunner {
         shell: true,
       });
 
-      this.processes.set(service, { process: child, color });
+      this.#processes.set(service, { process: child, color });
 
       child.stdout.on("data", (data) => {
         const lines = data
@@ -83,7 +91,7 @@ export class ParallelRunner {
       });
 
       child.on("close", (code) => {
-        this.processes.delete(service);
+        this.#processes.delete(service);
         if (code === 0) {
           this.logWithPrefix(
             service,
@@ -104,7 +112,7 @@ export class ParallelRunner {
       });
 
       child.on("error", (error) => {
-        this.processes.delete(service);
+        this.#processes.delete(service);
         this.logWithPrefix(service, `Error: ${error.message}`, color, "error");
         reject({ service, error });
       });
@@ -113,6 +121,9 @@ export class ParallelRunner {
 
   async runParallel(commands) {
     console.log(chalk.bold.blue("🚀 Starting parallel execution...\n"));
+
+    const maxLength = Math.max(...commands.map(({ name }) => name.length)) + 3;
+    this.#maxLength = maxLength > this.#maxLength ? this.#maxLength : maxLength < this.#minLength ? this.#minLength : maxLength;
 
     const startTime = Date.now();
     const promises = commands.map(({ name, command, cwd }) =>
@@ -158,7 +169,7 @@ export class ParallelRunner {
 
   stop() {
     console.log(chalk.yellow("\n🛑 Stopping all processes..."));
-    this.processes.forEach(({ process }, service) => {
+    this.#processes.forEach(({ process }, service) => {
       console.log(chalk.yellow(`Terminating ${service}...`));
       process.kill("SIGTERM");
     });
