@@ -31,11 +31,9 @@ export class ParallelRunner {
   }
 
   formatServiceName(name) {
-    const minLength = this.#minLength;
-    const maxLength = this.#maxLength;
-    let formatted = name.length > maxLength
-      ? name.substring(0, maxLength - 3) + "..."
-      : name.padEnd(minLength);
+    let formatted = name.length > this.#maxLength
+      ? name.substring(0, this.#maxLength - 3) + "..."
+      : name.padEnd(this.#maxLength);
     return formatted;
   }
 
@@ -122,8 +120,8 @@ export class ParallelRunner {
   async runParallel(commands) {
     console.log(chalk.bold.blue("🚀 Starting parallel execution...\n"));
 
-    const maxLength = Math.max(...commands.map(({ name }) => name.length)) + 3;
-    this.#maxLength = maxLength > this.#maxLength ? this.#maxLength : maxLength < this.#minLength ? this.#minLength : maxLength;
+    const length = Math.max(...commands.map(({ name }) => name.length));
+    this.#maxLength = length > this.#maxLength ? this.#maxLength : (length < this.#minLength ? this.#minLength : length);
 
     const startTime = Date.now();
     const promises = commands.map(({ name, command, cwd }) =>
