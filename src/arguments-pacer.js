@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import colorizer from './colorizer.js';
 
 // Example usage and CLI interface
 export function parseArguments() {
@@ -6,7 +6,7 @@ export function parseArguments() {
 
   if (args.length === 0 || args.includes('--help')) {
     console.log(`
-${chalk.bold.blue('Parallel NPM Runner')}
+${colorizer.bold.blue('Parallel NPM Runner')}
 
 Usage:
   node runner.js [options]

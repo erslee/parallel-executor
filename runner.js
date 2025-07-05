@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 import { parseArguments } from './src/arguments-pacer.js';
+import colorizer from './src/colorizer.js';
 import { ParallelRunner } from './src/parallel-runner.js';
-import chalk from 'chalk';
 
 // Handle graceful shutdown
 process.on('SIGINT', () => {
@@ -33,7 +33,7 @@ async function main() {
       minLen = config.minLength ?? minLen;
       maxLen = config.maxLength ?? maxLen;
     } catch (error) {
-      console.error(chalk.red('Error reading config file:'), error.message);
+      console.error(colorizer.red('Error reading config file:'), error.message);
       process.exit(1);
     }
   } else {
@@ -61,7 +61,7 @@ async function main() {
 
   if (commands.length === 0) {
     console.log(
-      chalk.yellow(
+      colorizer.yellow(
         'No commands to run. Use --config to specify a configuration file.'
       )
     );
@@ -73,6 +73,6 @@ async function main() {
 }
 
 main().catch(error => {
-  console.error(chalk.red('Unexpected error:'), error);
+  console.error(colorizer.red('Unexpected error:'), error);
   process.exit(1);
 });

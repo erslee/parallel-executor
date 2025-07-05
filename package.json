@@ -5,7 +5,7 @@
   "main": "runner.js",
   "type": "module",
   "bin": {
-    "parallel-sh": "./runner.js"
+    "parallel-sh": "runner.js"
   },
   "scripts": {
     "start": "node runner.js",
