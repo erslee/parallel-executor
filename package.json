@@ -4,6 +4,11 @@
   "description": "Run multiple commands in parallel with pretty Docker-like output",
   "main": "runner.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erslee/parallel-sh.git"
+  },
+  "homepage": "https://github.com/erslee/parallel-sh.git#readme",
   "bin": {
     "parallel-sh": "runner.js"
   },
