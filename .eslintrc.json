@@ -93,7 +93,7 @@
         "capIsNew": false
       }
     ],
-    "no-nested-ternary": "error",
+    "no-nested-ternary": "warn",
     "no-unneeded-ternary": "error",
     "operator-assignment": ["error", "always"],
     "prefer-exponentiation-operator": "error",

@@ -44,7 +44,7 @@ Examples:
     process.exit(0);
   }
 
-    // Parse --minLength and --maxLength
+  // Parse --minLength and --maxLength
   const minLengthIndex = args.indexOf('--minLength');
   const maxLengthIndex = args.indexOf('--maxLength');
   let minLength, maxLength;
@@ -61,7 +61,7 @@ Examples:
     const raw = args[commandsIndex + 1];
     const commands = raw
       .split(';')
-      .map((cmd, i) => ({
+      .map(cmd => ({
         name: `${cmd.trim().padEnd(10, ' ')}`,
         command: cmd.trim(),
         cwd: process.cwd()

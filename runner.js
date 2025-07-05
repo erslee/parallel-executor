@@ -2,7 +2,6 @@
 
 import { parseArguments } from './src/arguments-pacer.js';
 import { ParallelRunner } from './src/parallel-runner.js';
-import { fileURLToPath, resolve } from 'url';
 import chalk from 'chalk';
 
 // Handle graceful shutdown
@@ -13,7 +12,12 @@ process.on('SIGINT', () => {
 });
 
 async function main() {
-  const { configFile, commands: cliCommands, minLength, maxLength } = parseArguments();
+  const {
+    configFile,
+    commands: cliCommands,
+    minLength,
+    maxLength
+  } = parseArguments();
 
   let commands = [];
   let minLen = minLength ?? 4;

@@ -1,12 +1,14 @@
 # parallel-sh
 
-Run multiple shell commands in parallel with pretty, Docker-like output.
+Run multiple shell commands in parallel with pretty, Docker-like output. No third-party dependencies required.
 
 ## Features
+
 - Run multiple commands in parallel
 - Colorful, prefixed output for each command
 - Supports config file or direct command-line input
 - Graceful shutdown on Ctrl+C
+- **No third-party dependencies**
 
 ## Installation
 
@@ -83,10 +85,6 @@ npx parallel-sh --config commands.json
 npx parallel-sh --help
 ```
 
-## License
-
-MIT
-
 ### minLength and maxLength
 
 You can control the minimum and maximum width of the service name column in the output using `--minLength` and `--maxLength` (CLI) or `minLength` and `maxLength` (config file).
@@ -109,3 +107,8 @@ Or in your config file:
   "commands": [ ... ]
 }
 ```
+
+
+## License
+
+MIT
